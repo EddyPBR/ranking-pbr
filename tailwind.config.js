@@ -4,7 +4,12 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        cursive: ["Fredoka One", "cursive"],
+        sans: ["Open Sans", "sans-serif"]
+      }
+    },
   },
   plugins: [],
 }
