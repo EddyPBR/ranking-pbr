@@ -18,7 +18,7 @@ export function DropdownMenu({ image_url, username }: DropdownMenuProps) {
         type="button"
         onClick={() => setShowDropdown(!showDropdown)}
       >
-        <div className="border-2 border-white rounded-full flex items-center justify-center">
+        <div className="border-2 border-white rounded-full flex items-center justify-center w-14 sm:w-12 ">
           <Image
             src={image_url}
             alt={username}
@@ -28,11 +28,11 @@ export function DropdownMenu({ image_url, username }: DropdownMenuProps) {
           />
         </div>
 
-        <div className="flex flex-col ml-2">
-          <span className="text-gray-200 font-sans text-sm text-left">
+        <div className="flex flex-col ml-2 ">
+          <span className="text-gray-200 font-sans text-xs md:text-sm text-left">
             welcome,
           </span>
-          <strong className="text-gray-100 font-cursive">{username}</strong>
+          <strong className="text-gray-100 font-cursive text-xs sm:text-base text-left">{username}</strong>
         </div>
       </button>
 
