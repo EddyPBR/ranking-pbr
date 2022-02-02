@@ -8,8 +8,13 @@ module.exports = {
       fontFamily: {
         cursive: ["Fredoka One", "cursive"],
         sans: ["Open Sans", "sans-serif"]
-      }
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require("tailwind-scrollbar"),
+  ],
+  variants: {
+    scrollbar: ["dark", "rounded"],
+  }
 }
