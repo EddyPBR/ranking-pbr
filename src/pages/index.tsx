@@ -1,13 +1,13 @@
-import { AiOutlineGoogle } from "react-icons/ai";
 import type { NextPage } from "next";
 import { MdDoubleArrow } from "react-icons/md";
 
 import { SEO } from "@components/SEO";
+import { GoogleLoginButton } from "@components/GoogleLoginButton";
 import Image from "next/image";
 import { useAuth } from "@hooks/useAuth";
 
 const Page: NextPage = () => {
-  const { signInWithGoogle } = useAuth();
+  const { user } = useAuth();
 
   return (
     <>
@@ -41,10 +41,7 @@ const Page: NextPage = () => {
 
         <article id="login" className="w-full sm:w-6/12 md:w-5/12 h-screen flex flex-col justify-center sm:bg-gray-50 px-8">
           <div className="max-w-sm w-full mx-auto flex flex-col">
-            <button onClick={signInWithGoogle} className="bg-red-500 text-white h-12 font-sans rounded hover:bg-red-600 transition-colors font-bold flex items-center px-8 mb-12">
-              <AiOutlineGoogle size={28} className="mr-6" />
-              Create your room with google
-            </button>
+            <GoogleLoginButton />
 
             <div className="flex mb-6 w-full items-center">
               <hr className="w-6/12 bg-gray-700" />
