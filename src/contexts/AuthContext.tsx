@@ -12,15 +12,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (user) {
         const { displayName, photoURL, uid } = user;
 
-        if(!displayName || !photoURL) {
-          throw new Error('Missing information from Google Account.');
-        }
-
         setUser({
           id: uid,
-          name: displayName,
-          avatar: photoURL
-        })
+          username: displayName ?? "Unknown",
+          avatar: photoURL ?? "/assets/profile-default.svg",
+        });
       }
     })
 
@@ -37,14 +33,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (user) {
       const { displayName, photoURL, uid } = user;
 
-      if (!displayName || !photoURL) {
-        throw new Error("Missing information from Google Account.");
-      }
-
       setUser({
         id: uid,
-        name: displayName,
-        avatar: photoURL,
+        username: displayName ?? "Unknown",
+        avatar: photoURL ?? "/assets/profile-default.svg",
       });
     }
   }

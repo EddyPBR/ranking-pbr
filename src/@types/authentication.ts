@@ -2,8 +2,8 @@ import type { ReactNode } from "react";
 
 export type User = {
   id: string;
-  name: string;
   avatar: string;
+  username: string;
 }
 
 export type AuthProviderProps = {
