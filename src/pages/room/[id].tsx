@@ -88,13 +88,9 @@ const Page: NextPage = () => {
         description="Ranking PBR - Room created by someone"
       />
 
-      <Header
-        image_url="https://lh3.googleusercontent.com/ogw/ADea4I4tzhTmtjLgaho1DvfmlZX1COOjTJJD5lpIT7IwnA=s32-c-mo"
-        username="Edvaldo Junior"
-        room_id="123e4567-e89b-12d3-a456-426614174000"
-      />
+      <Header room_id="123e4567-e89b-12d3-a456-426614174000" />
 
-      <main className="container py-12 mx-auto w-full flex flex-col min-h-[calc(100vh-8rem)] justify-center align-center items-center">
+      <main className="container py-12 mx-auto w-full flex flex-col min-h-[calc(100vh-8rem)] justify-center align-center items-center px-4">
         <RoomHeader playersQuantity={examplePlayers.length} />
         <PlayersTable players={examplePlayers} />
       </main>
