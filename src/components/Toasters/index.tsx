@@ -21,7 +21,7 @@ export const ErrorToast = ({ title, message }: ErrorToastProps) => {
       </div>
     </article>
   ));
-}
+};
 
 export const SuccessToast = ({ title, message }: ErrorToastProps) => {
   return toast.custom(() => (
@@ -38,4 +38,4 @@ export const SuccessToast = ({ title, message }: ErrorToastProps) => {
       </div>
     </article>
   ));
-}
+};

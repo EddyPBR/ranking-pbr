@@ -33,7 +33,10 @@ export function PlayersTable({ players }: PlayerTableProps) {
         <tbody>
           {players.map((player, index) => {
             return (
-              <tr key={index} className="bg-white hover:bg-gray-100 transition-colors">
+              <tr
+                key={index}
+                className="bg-white hover:bg-gray-100 transition-colors"
+              >
                 <td className="px-5 py-5 border-b border-gray-200 text-sm text-center sm:text-left text-gray-700">
                   {index + 1}
                 </td>
@@ -46,7 +49,9 @@ export function PlayersTable({ players }: PlayerTableProps) {
                       height="44"
                       className="rounded-full"
                     />
-                    <p className="ml-2 text-md text-center sm:text-left">{player.username}</p>
+                    <p className="ml-2 text-md text-center sm:text-left">
+                      {player.username}
+                    </p>
                   </div>
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 text-sm text-center sm:text-left font-semibold text-gray-700">

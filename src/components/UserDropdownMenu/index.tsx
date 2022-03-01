@@ -1,6 +1,7 @@
 import { useState } from "react";
-import Image from "next/image";
+
 import { useAuth } from "@hooks/useAuth";
+import Image from "next/image";
 
 interface UserDropdownMenuProps {
   inRoom?: boolean;
@@ -11,7 +12,9 @@ export function UserDropdownMenu({ inRoom }: UserDropdownMenuProps) {
 
   const [showDropdown, setShowDropdown] = useState(false);
 
-  if(!user) { return <></> } // create skeleton load
+  if (!user) {
+    return <></>;
+  } // create skeleton load
 
   return (
     <div>
@@ -21,7 +24,11 @@ export function UserDropdownMenu({ inRoom }: UserDropdownMenuProps) {
         type="button"
         onClick={() => setShowDropdown(!showDropdown)}
       >
-        <div className={`border-2 ${inRoom ? "border-white" : "border-indigo-500"} rounded-full flex items-center justify-center w-14 sm:w-12`}>
+        <div
+          className={`border-2 ${
+            inRoom ? "border-white" : "border-indigo-500"
+          } rounded-full flex items-center justify-center w-14 sm:w-12`}
+        >
           <Image
             src={user.avatar}
             alt={user.username}
@@ -32,10 +39,20 @@ export function UserDropdownMenu({ inRoom }: UserDropdownMenuProps) {
         </div>
 
         <div className="flex flex-col ml-2 ">
-          <span className={`${inRoom ? "text-gray-200" : "text-gray-500"} font-sans text-xs md:text-sm text-left`}>
+          <span
+            className={`${
+              inRoom ? "text-gray-200" : "text-gray-500"
+            } font-sans text-xs md:text-sm text-left`}
+          >
             welcome,
           </span>
-          <strong className={`${inRoom ? "text-gray-100" : "text-gray-600"} font-cursive text-xs sm:text-base text-left`}>{user.username}</strong>
+          <strong
+            className={`${
+              inRoom ? "text-gray-100" : "text-gray-600"
+            } font-cursive text-xs sm:text-base text-left`}
+          >
+            {user.username}
+          </strong>
         </div>
       </button>
 
@@ -45,8 +62,7 @@ export function UserDropdownMenu({ inRoom }: UserDropdownMenuProps) {
           showDropdown ? null : "hidden"
         } w-48 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 absolute`}
       >
-        {
-          inRoom && 
+        {inRoom && (
           <ul className="py-1" aria-labelledby="dropdown-menu">
             <li>
               <button
@@ -73,7 +89,7 @@ export function UserDropdownMenu({ inRoom }: UserDropdownMenuProps) {
               </button>
             </li>
           </ul>
-        }
+        )}
         <div className="py-1">
           <button
             type="button"

@@ -14,9 +14,7 @@ export function Header({ room_id }: HeaderProps) {
 
         <button className="bg-white px-4 py-2 rounded flex items-center gap-2 text-xs sm:text-sm hover:bg-gray-100 hover:cursor-copy">
           <BiCopy size={24} />
-          <span className="w-full h-4 overflow-y-hidden">
-            {room_id}
-          </span>
+          <span className="w-full h-4 overflow-y-hidden">{room_id}</span>
         </button>
       </div>
     </header>

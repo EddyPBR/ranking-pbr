@@ -1,5 +1,6 @@
-import { AuthProvider } from "@contexts/AuthContext";
 import { Toaster } from "react-hot-toast";
+
+import { AuthProvider } from "@contexts/AuthContext";
 import type { AppProps } from "next/app";
 import "@styles/globals.css";
 

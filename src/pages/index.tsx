@@ -1,10 +1,10 @@
-import type { NextPage } from "next";
 import { MdDoubleArrow } from "react-icons/md";
 
-import { SEO } from "@components/SEO";
 import { GoogleLoginButton } from "@components/GoogleLoginButton";
-import Image from "next/image";
+import { SEO } from "@components/SEO";
 import { useAuth } from "@hooks/useAuth";
+import type { NextPage } from "next";
+import Image from "next/image";
 
 const Page: NextPage = () => {
   const { user } = useAuth();
@@ -39,7 +39,10 @@ const Page: NextPage = () => {
           </a>
         </article>
 
-        <article id="login" className="w-full sm:w-6/12 md:w-5/12 h-screen flex flex-col justify-center sm:bg-gray-50 px-8">
+        <article
+          id="login"
+          className="w-full sm:w-6/12 md:w-5/12 h-screen flex flex-col justify-center sm:bg-gray-50 px-8"
+        >
           <div className="max-w-sm w-full mx-auto flex flex-col">
             <GoogleLoginButton />
 
@@ -57,9 +60,13 @@ const Page: NextPage = () => {
               name="room_id"
               placeholder="Room code..."
               aria-label="enter the room code"
-              className="bg-gwhite border-2 h-12 px-4 mb-4 font-sans rounded border-indigo-100"
+              className="bg-white border-2 h-12 px-4 mb-4 font-sans rounded border-indigo-100"
             />
-            <button type="button" className="bg-indigo-600 text-white h-12 font-sans rounded hover:bg-indigo-700 mt-2 transition-colors" aria-label="enter the room">
+            <button
+              type="button"
+              className="bg-indigo-600 text-white h-12 font-sans rounded hover:bg-indigo-700 mt-2 transition-colors"
+              aria-label="enter the room"
+            >
               Entrar na sala
             </button>
           </div>
