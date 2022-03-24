@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import { TiPlus, TiMinus } from "react-icons/ti";
 
 import Image from "next/image";
@@ -12,7 +13,7 @@ interface PlayerTableProps {
   players: Player[];
 }
 
-export function PlayersTable({ players }: PlayerTableProps) {
+const PlayersTable: FC<PlayerTableProps> = ({ players }) => {
   return (
     <div className="overflow-auto w-full max-h-[calc(100vh-24rem)] scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-100 scrollbar-thumb-rounded-full scrollbar-thumb-roun">
       <table className="w-full">
@@ -80,4 +81,6 @@ export function PlayersTable({ players }: PlayerTableProps) {
       </table>
     </div>
   );
-}
+};
+
+export { PlayersTable };

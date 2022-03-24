@@ -1,10 +1,11 @@
+import type { FC } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 
 interface RoomHeaderProps {
   playersQuantity: number;
 }
 
-export function RoomHeader({ playersQuantity }: RoomHeaderProps) {
+const RoomHeader: FC<RoomHeaderProps> = ({ playersQuantity }) => {
   return (
     <section className="w-full h-24 sm:h-16 bg-gray-900 rounded-t">
       <div className="container h-full px-4 py-2 flex items-center justify-center sm:justify-between flex-col sm:flex-row gap-2">
@@ -22,4 +23,6 @@ export function RoomHeader({ playersQuantity }: RoomHeaderProps) {
       </div>
     </section>
   );
-}
+};
+
+export { RoomHeader };

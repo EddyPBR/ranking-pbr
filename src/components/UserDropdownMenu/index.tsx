@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FC } from "react";
 
 import { useAuth } from "@hooks/useAuth";
 import Image from "next/image";
@@ -7,7 +7,7 @@ interface UserDropdownMenuProps {
   inRoom?: boolean;
 }
 
-export function UserDropdownMenu({ inRoom }: UserDropdownMenuProps) {
+const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
   const { user } = useAuth();
 
   const [showDropdown, setShowDropdown] = useState(false);
@@ -101,4 +101,6 @@ export function UserDropdownMenu({ inRoom }: UserDropdownMenuProps) {
       </div>
     </div>
   );
-}
+};
+
+export { UserDropdownMenu };

@@ -1,9 +1,10 @@
+import type { FC } from "react";
 import { AiOutlineGoogle } from "react-icons/ai";
 
 import { ErrorToast } from "@components/Toasters";
 import { useAuth } from "@hooks/useAuth";
 
-export function GoogleLoginButton() {
+const GoogleLoginButton: FC = () => {
   const { signInWithGoogle } = useAuth();
 
   async function handleSignAndCreateRoom() {
@@ -23,4 +24,6 @@ export function GoogleLoginButton() {
       Create your room with google
     </button>
   );
-}
+};
+
+export { GoogleLoginButton };

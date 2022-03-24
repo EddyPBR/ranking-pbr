@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import { BiCopy } from "react-icons/bi";
 
 import { UserDropdownMenu } from "@components/UserDropdownMenu";
@@ -6,7 +7,7 @@ interface HeaderProps {
   room_id: string;
 }
 
-export function Header({ room_id }: HeaderProps) {
+const Header: FC<HeaderProps> = ({ room_id }) => {
   return (
     <header className="h-20 bg-indigo-600 flex items-center px-4">
       <div className="container mx-auto flex justify-between items-center gap-4">
@@ -19,4 +20,6 @@ export function Header({ room_id }: HeaderProps) {
       </div>
     </header>
   );
-}
+};
+
+export { Header };

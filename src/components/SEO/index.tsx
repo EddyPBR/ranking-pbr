@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 import Head from "next/head";
 
 interface SEOProps {
@@ -5,7 +7,7 @@ interface SEOProps {
   description: string;
 }
 
-export function SEO({ title, description }: SEOProps) {
+const SEO: FC<SEOProps> = ({ title, description }) => {
   return (
     <Head>
       <title>{title}</title>
@@ -15,4 +17,6 @@ export function SEO({ title, description }: SEOProps) {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
   );
-}
+};
+
+export { SEO };
