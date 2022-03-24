@@ -1,15 +1,22 @@
+import type { FC } from "react";
 import { useState, useEffect, createContext } from "react";
 
-import {
-  AuthContextType,
-  AuthProviderProps,
-  User,
-} from "@@types/authentication";
 import { auth, firebase } from "@services/firebase";
+
+type User = {
+  id: string;
+  avatar: string;
+  username: string;
+};
+
+type AuthContextType = {
+  user: User | undefined;
+  signInWithGoogle: () => Promise<void>;
+};
 
 const AuthContext = createContext({} as AuthContextType);
 
-export function AuthProvider({ children }: AuthProviderProps) {
+const AuthProvider: FC = ({ children }) => {
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
@@ -56,8 +63,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 const AuthConsumer = AuthContext.Consumer;
 
-export { AuthContext, AuthConsumer };
+export { AuthProvider, AuthContext, AuthConsumer };
