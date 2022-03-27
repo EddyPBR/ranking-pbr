@@ -1,4 +1,5 @@
 import { useState, FC } from "react";
+import Skeleton from "react-loading-skeleton";
 
 import { useAuth } from "@hooks/useAuth";
 import Image from "next/image";
@@ -13,8 +14,16 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   if (!user) {
-    return <></>;
-  } // create skeleton load
+    return (
+      <div className="flex gap-2 items-center">
+        <Skeleton className="h-12 w-12 rounded-full" />
+        <div>
+          <Skeleton className="w-28 h-4" />
+          <Skeleton className="w-36 h-5" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -32,8 +41,8 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
           <Image
             src={user.avatar}
             alt={user.username}
-            width="50"
-            height="50"
+            width={50}
+            height={50}
             className="rounded-full px-2 py-2"
           />
         </div>
@@ -49,7 +58,7 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
           <strong
             className={`${
               inRoom ? "text-gray-100" : "text-gray-600"
-            } font-cursive text-xs sm:text-base text-left`}
+            } font-cursive text-xs sm:text-base text-left font-normal`}
           >
             {user.username}
           </strong>
