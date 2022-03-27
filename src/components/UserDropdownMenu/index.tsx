@@ -1,7 +1,8 @@
-import { useState, FC } from "react";
+import { useState, useRef, FC } from "react";
 import Skeleton from "react-loading-skeleton";
 
 import { useAuth } from "@hooks/useAuth";
+import { useOnClickOutside } from "@hooks/useOnClickOutside";
 import Image from "next/image";
 
 interface UserDropdownMenuProps {
@@ -9,9 +10,13 @@ interface UserDropdownMenuProps {
 }
 
 const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
-  const { user } = useAuth();
+  const { user, signOutWithGoogle } = useAuth();
+
+  const userDropdownMenuRef = useRef<HTMLDivElement | null>(null);
 
   const [showDropdown, setShowDropdown] = useState(false);
+
+  useOnClickOutside(userDropdownMenuRef, () => setShowDropdown(false));
 
   if (!user) {
     return (
@@ -26,7 +31,7 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
   }
 
   return (
-    <div>
+    <div className="relative w-max" ref={userDropdownMenuRef}>
       <button
         id="dropdown-menu"
         className="flex items-center py-1 px-1"
@@ -66,7 +71,6 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
       </button>
 
       <div
-        id="dropdown-menu"
         className={`${
           showDropdown ? null : "hidden"
         } w-48 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 absolute`}
@@ -103,6 +107,7 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
           <button
             type="button"
             className="block py-2 px-4 w-full text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+            onClick={signOutWithGoogle}
           >
             Logout
           </button>
