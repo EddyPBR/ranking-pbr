@@ -12,6 +12,7 @@ type User = {
 type AuthContextType = {
   user: User | undefined;
   signInWithGoogle: () => Promise<void>;
+  signOutWithGoogle: () => Promise<void>;
 };
 
 const AuthContext = createContext({} as AuthContextType);
@@ -42,14 +43,30 @@ const AuthProvider: FC = ({ children }) => {
 
     const { user } = await auth.signInWithPopup(provider);
 
-    if (user) {
-      const { displayName, photoURL, uid } = user;
+    if (!user) {
+      throw new Error("Something went wrong, please try again");
+    }
 
-      setUser({
-        id: uid,
-        username: displayName ?? "Unknown",
-        avatar: photoURL ?? "/assets/profile-default.svg",
-      });
+    const { displayName, photoURL, uid } = user;
+
+    localStorage.setItem("rankingpbr@uid", uid);
+
+    setUser({
+      id: uid,
+      username: displayName ?? "Unknown",
+      avatar: photoURL ?? "/assets/profile-default.svg",
+    });
+  }
+
+  async function signOutWithGoogle() {
+    try {
+      await firebase.auth().signOut();
+
+      localStorage.removeItem("rankingpbr@uid");
+
+      setUser(undefined);
+    } catch {
+      throw new Error("Logout failed, please try again");
     }
   }
 
@@ -58,6 +75,7 @@ const AuthProvider: FC = ({ children }) => {
       value={{
         user,
         signInWithGoogle,
+        signOutWithGoogle,
       }}
     >
       {children}
