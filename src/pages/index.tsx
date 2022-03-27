@@ -1,5 +1,6 @@
 import { MdDoubleArrow } from "react-icons/md";
 
+import { CreateRoom } from "@components/CreateRoom";
 import { GoogleLoginButton } from "@components/GoogleLoginButton";
 import { SEO } from "@components/SEO";
 import { useAuth } from "@hooks/useAuth";
@@ -7,7 +8,7 @@ import type { NextPage } from "next";
 import Image from "next/image";
 
 const Page: NextPage = () => {
-  const { user } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   return (
     <>
@@ -44,7 +45,7 @@ const Page: NextPage = () => {
           className="w-full sm:w-6/12 md:w-5/12 h-screen flex flex-col justify-center sm:bg-gray-50 px-8"
         >
           <div className="max-w-sm w-full mx-auto flex flex-col">
-            <GoogleLoginButton />
+            {isLoggedIn() ? <CreateRoom /> : <GoogleLoginButton />}
 
             <div className="flex mb-6 w-full items-center">
               <hr className="w-6/12 bg-gray-700" />
@@ -60,7 +61,7 @@ const Page: NextPage = () => {
               name="room_id"
               placeholder="Room code..."
               aria-label="enter the room code"
-              className="bg-white border h-12 px-4 mb-4 font-sans rounded border-gray-200"
+              className="bg-white border h-12 px-4 mb-4 font-sans rounded border-gray-3s00"
             />
             <button
               type="button"
