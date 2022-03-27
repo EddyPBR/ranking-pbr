@@ -13,6 +13,7 @@ type AuthContextType = {
   user: User | undefined;
   signInWithGoogle: () => Promise<void>;
   signOutWithGoogle: () => Promise<void>;
+  isLoggedIn: () => boolean;
 };
 
 const AuthContext = createContext({} as AuthContextType);
@@ -70,12 +71,22 @@ const AuthProvider: FC = ({ children }) => {
     }
   }
 
+  const isLoggedIn = () => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    const uid = localStorage.getItem("rankingpbr@uid");
+    return !!user || !!uid;
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user,
         signInWithGoogle,
         signOutWithGoogle,
+        isLoggedIn,
       }}
     >
       {children}
