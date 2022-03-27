@@ -60,14 +60,14 @@ const Page: NextPage = () => {
               name="room_id"
               placeholder="Room code..."
               aria-label="enter the room code"
-              className="bg-white border-2 h-12 px-4 mb-4 font-sans rounded border-indigo-100"
+              className="bg-white border h-12 px-4 mb-4 font-sans rounded border-gray-200"
             />
             <button
               type="button"
               className="bg-indigo-600 text-white h-12 font-sans rounded hover:bg-indigo-700 mt-2 transition-colors"
               aria-label="enter the room"
             >
-              Entrar na sala
+              Enter in a room
             </button>
           </div>
         </article>
