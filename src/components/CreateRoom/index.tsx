@@ -1,10 +1,12 @@
 import { FC, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 
-import { ErrorToast } from "@components/Toasters";
+import { SuccessToast, ErrorToast } from "@components/Toasts";
 import { UserDropdownMenu } from "@components/UserDropdownMenu";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth } from "@hooks/useAuth";
+import { useRoom } from "@hooks/useRoom";
+import { useRouter } from "next/router";
 import * as yup from "yup";
 
 type Inputs = {
@@ -13,11 +15,15 @@ type Inputs = {
 
 const createRoomSchema = yup
   .object({
-    room_title: yup.string().min(3).max(255).required(),
+    room_title: yup.string().trim().min(3).max(255).required(),
   })
   .required();
 
 const CreateRoom: FC = () => {
+  const router = useRouter();
+  const { user } = useAuth();
+  const { createRoom } = useRoom();
+
   const {
     register,
     handleSubmit,
@@ -26,8 +32,23 @@ const CreateRoom: FC = () => {
     resolver: yupResolver(createRoomSchema),
   });
 
-  const handleCreateRoom: SubmitHandler<Inputs> = (inputs) => {
-    console.log(inputs);
+  const handleCreateRoom: SubmitHandler<Inputs> = async ({ room_title }) => {
+    if (!user) {
+      ErrorToast({ message: "You are not logged in!" });
+      return;
+    }
+
+    try {
+      const { key } = await createRoom(room_title);
+
+      SuccessToast({ message: "room created with success!" });
+
+      router.push(`room/${key}`);
+    } catch (error: any) {
+      ErrorToast({
+        message: error?.message ?? "Failed to create",
+      });
+    }
   };
 
   useEffect(() => {
@@ -35,12 +56,7 @@ const CreateRoom: FC = () => {
       return;
     }
 
-    toast.error(errors.room_title?.message, {
-      style: {
-        background: "#DC2626",
-        color: "#FFF",
-      },
-    });
+    ErrorToast({ message: errors.room_title?.message });
   }, [errors]);
 
   return (
