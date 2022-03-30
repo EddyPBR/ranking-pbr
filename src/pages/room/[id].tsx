@@ -1,8 +1,12 @@
+import { useEffect } from "react";
+
 import { Header } from "@components/Header";
 import { PlayersTable } from "@components/PlayersTable";
 import { RoomHeader } from "@components/RoomHeader";
 import { SEO } from "@components/SEO";
+import { useAuth } from "@hooks/useAuth";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 
 const examplePlayers = [
   {
@@ -81,6 +85,15 @@ const examplePlayers = [
 ];
 
 const Page: NextPage = () => {
+  const router = useRouter();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, [user, router]);
+
   return (
     <>
       <SEO
