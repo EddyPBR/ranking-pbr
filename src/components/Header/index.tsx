@@ -1,21 +1,34 @@
 import type { FC } from "react";
 import { BiCopy } from "react-icons/bi";
+import Skeleton from "react-loading-skeleton";
 
 import { UserDropdownMenu } from "@components/UserDropdownMenu";
 
 interface HeaderProps {
-  room_id: string;
+  roomId?: string;
 }
 
-const Header: FC<HeaderProps> = ({ room_id }) => {
+const Header: FC<HeaderProps> = ({ roomId }) => {
   return (
     <header className="h-20 bg-indigo-600 flex items-center px-4">
       <div className="container mx-auto flex justify-between items-center gap-4">
         <UserDropdownMenu inRoom />
 
-        <button className="bg-white px-4 py-2 rounded flex items-center gap-2 text-xs sm:text-sm hover:bg-gray-100 hover:cursor-copy">
-          <BiCopy size={24} />
-          <span className="w-full h-4 overflow-y-hidden">{room_id}</span>
+        <button
+          disabled={!roomId}
+          className="bg-white px-4 py-2 rounded flex items-center gap-2 text-xs sm:text-sm hover:bg-gray-100 hover:cursor-copy disabled:bg-gray-100 disabled:cursor-not-allowed"
+        >
+          {roomId ? (
+            <>
+              <BiCopy size={24} />
+              <span className="w-full h-4 overflow-y-hidden">{roomId}</span>
+            </>
+          ) : (
+            <>
+              <Skeleton className="w-5 h-5" />
+              <Skeleton className="w-40 h-5" />
+            </>
+          )}
         </button>
       </div>
     </header>
