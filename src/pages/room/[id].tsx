@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { Header } from "@components/Header";
 import { PlayersTable } from "@components/PlayersTable";
 import { RoomHeader } from "@components/RoomHeader";
 import { SEO } from "@components/SEO";
 import { useAuth } from "@hooks/useAuth";
+import { useRoom } from "@hooks/useRoom";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 
@@ -87,12 +88,17 @@ const examplePlayers = [
 const Page: NextPage = () => {
   const router = useRouter();
   const { user } = useAuth();
+  const { setRoomId, roomId, room } = useRoom();
 
   useEffect(() => {
-    if (!user) {
-      router.push("/");
+    const roomId = router.query.id as string;
+
+    if (!roomId) {
+      return;
     }
-  }, [user, router]);
+
+    setRoomId(roomId);
+  }, [router.query.id, setRoomId]);
 
   return (
     <>
@@ -101,10 +107,13 @@ const Page: NextPage = () => {
         description="Ranking PBR - Room created by someone"
       />
 
-      <Header room_id="123e4567-e89b-12d3-a456-426614174000" />
+      <Header roomId={roomId} />
 
       <main className="container py-12 mx-auto w-full flex flex-col min-h-[calc(100vh-8rem)] justify-center align-center items-center px-4">
-        <RoomHeader playersQuantity={examplePlayers.length} />
+        <RoomHeader
+          playersQuantity={examplePlayers.length}
+          roomTitle={room?.title}
+        />
         <PlayersTable players={examplePlayers} />
       </main>
     </>
