@@ -4,6 +4,7 @@ import { Header } from "@components/Header";
 import { PlayersTable } from "@components/PlayersTable";
 import { RoomHeader } from "@components/RoomHeader";
 import { SEO } from "@components/SEO";
+import { ErrorToast } from "@components/Toasts";
 import { useAuth } from "@hooks/useAuth";
 import { useRoom } from "@hooks/useRoom";
 import type { NextPage } from "next";
@@ -87,18 +88,23 @@ const examplePlayers = [
 
 const Page: NextPage = () => {
   const router = useRouter();
-  const { user } = useAuth();
-  const { setRoomId, roomId, room } = useRoom();
+  const { isLoadingRoom, setRoomId, roomId, room } = useRoom();
 
   useEffect(() => {
     const roomId = router.query.id as string;
-
     if (!roomId) {
       return;
     }
 
     setRoomId(roomId);
   }, [router.query.id, setRoomId]);
+
+  useEffect(() => {
+    if (!isLoadingRoom && !room) {
+      ErrorToast({ message: "Room not found :(" });
+      router.push("/");
+    }
+  }, [isLoadingRoom, room, router]);
 
   return (
     <>
