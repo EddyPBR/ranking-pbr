@@ -4,6 +4,7 @@ import Skeleton from "react-loading-skeleton";
 import { useAuth } from "@hooks/useAuth";
 import { useOnClickOutside } from "@hooks/useOnClickOutside";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 interface UserDropdownMenuProps {
   inRoom?: boolean;
@@ -11,12 +12,18 @@ interface UserDropdownMenuProps {
 
 const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
   const { user, signOutWithGoogle } = useAuth();
+  const router = useRouter();
 
   const userDropdownMenuRef = useRef<HTMLDivElement | null>(null);
 
   const [showDropdown, setShowDropdown] = useState(false);
 
   useOnClickOutside(userDropdownMenuRef, () => setShowDropdown(false));
+
+  const handleLogoutWithGoogleAndRedirect = async () => {
+    await signOutWithGoogle();
+    router.push("/");
+  };
 
   if (!user) {
     return (
@@ -107,7 +114,7 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
           <button
             type="button"
             className="block py-2 px-4 w-full text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            onClick={signOutWithGoogle}
+            onClick={handleLogoutWithGoogleAndRedirect}
           >
             Logout
           </button>
