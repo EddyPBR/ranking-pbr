@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { ErrorToast } from "@components/Toasts";
 import { database } from "@services/firebase";
 
 import { useAuth } from "./useAuth";
@@ -14,6 +15,7 @@ const useRoom = () => {
 
   const [roomId, setRoomId] = useState<string | undefined>();
   const [room, setRoom] = useState<RoomState | undefined>();
+  const [isLoadingRoom, setIsLoadingRoom] = useState<boolean>(true);
 
   const createRoom = async (title: string) => {
     if (!user) {
@@ -37,15 +39,24 @@ const useRoom = () => {
     }
 
     const getRoomAndSetState = async (roomId: string) => {
-      const roomSnapshot = await database.ref(`rooms/${roomId}`).get();
-      const roomData: RoomState = roomSnapshot.val();
-      setRoom(roomData);
+      setIsLoadingRoom(true);
+
+      try {
+        const roomSnapshot = await database.ref(`rooms/${roomId}`).get();
+        const roomData: RoomState = roomSnapshot.val();
+        setRoom(roomData);
+      } catch (error: any) {
+        ErrorToast(error?.message ?? "Unknown error occurs");
+      } finally {
+        setIsLoadingRoom(false);
+      }
     };
 
     getRoomAndSetState(roomId);
   }, [roomId]);
 
   return {
+    isLoadingRoom,
     createRoom,
     getRoom,
     setRoomId,
