@@ -3,16 +3,20 @@ import { BiCopy } from "react-icons/bi";
 import Skeleton from "react-loading-skeleton";
 
 import { UserDropdownMenu } from "@components/UserDropdownMenu";
+import { UserIconLogin } from "@components/UserIconLogin";
+import { useAuth } from "@hooks/useAuth";
 
 interface HeaderProps {
   roomId?: string;
 }
 
 const Header: FC<HeaderProps> = ({ roomId }) => {
+  const { isLoggedIn } = useAuth();
+
   return (
     <header className="h-20 bg-indigo-600 flex items-center px-4">
       <div className="container mx-auto flex justify-between items-center gap-4">
-        <UserDropdownMenu inRoom />
+        {isLoggedIn() ? <UserDropdownMenu inRoom /> : <UserIconLogin />}
 
         <button
           disabled={!roomId}
