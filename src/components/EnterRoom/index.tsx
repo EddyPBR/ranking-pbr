@@ -1,26 +1,31 @@
 import type { FC } from "react";
 import { useForm } from "react-hook-form";
 
+import { useRouter } from "next/router";
+
 type FormInputs = {
   roomCode: string;
 };
 
 const EnterRoom: FC = () => {
-  const { handleSubmit } = useForm<FormInputs>();
+  const router = useRouter();
+  const { handleSubmit, register } = useForm<FormInputs>();
 
-  const handleEnterRoom = () => {
-    alert("ok");
+  const handleEnterRoom = ({ roomCode }: FormInputs) => {
+    router.push(`/room/${roomCode}`);
   };
 
   return (
     <form onSubmit={handleSubmit(handleEnterRoom)} className="flex flex-col">
       <input
         type="text"
-        id="room_id"
-        name="room_id"
+        id="roomCode"
         placeholder="Room code..."
         aria-label="enter the room code"
-        className="bg-white border h-12 px-4 mb-4 font-sans rounded border-gray-3s00"
+        className="bg-white border h-12 px-4 mb-4 font-sans rounded border-gray-300"
+        {...register("roomCode", {
+          required: true,
+        })}
       />
       <button
         type="submit"
