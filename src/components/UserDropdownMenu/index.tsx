@@ -1,6 +1,7 @@
 import { useState, useRef, FC } from "react";
 import Skeleton from "react-loading-skeleton";
 
+import { ChangeRoomTitleModal } from "@components/ChangeRoomTitleModal";
 import { useAuth } from "@hooks/useAuth";
 import { useOnClickOutside } from "@hooks/useOnClickOutside";
 import Image from "next/image";
@@ -16,7 +17,9 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
 
   const userDropdownMenuRef = useRef<HTMLDivElement | null>(null);
 
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const [showChangeTitleModal, setShowChangeTitleModal] =
+    useState<boolean>(false);
 
   useOnClickOutside(userDropdownMenuRef, () => setShowDropdown(false));
 
@@ -87,9 +90,10 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
             <li>
               <button
                 type="button"
+                onClick={() => setShowChangeTitleModal(true)}
                 className="block py-2 px-4 w-full text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
               >
-                Change room name
+                Change room&apos;s name
               </button>
             </li>
             <li>
@@ -120,6 +124,11 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
           </button>
         </div>
       </div>
+
+      <ChangeRoomTitleModal
+        isOpen={showChangeTitleModal}
+        handleCloseModal={() => setShowChangeTitleModal(false)}
+      />
     </div>
   );
 };
