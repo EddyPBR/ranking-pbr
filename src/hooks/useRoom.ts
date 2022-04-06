@@ -33,6 +33,16 @@ const useRoom = () => {
     return await database.ref(`rooms/${roomId}`).get();
   };
 
+  const changeRoomTitle = async (roomId: string, title: string) => {
+    if (!user || !roomId) {
+      throw new Error("Unauthorized, please login!");
+    }
+
+    return await database.ref(`rooms/${roomId}`).update({
+      title,
+    });
+  };
+
   useEffect(() => {
     if (!roomId) {
       return;
@@ -56,6 +66,7 @@ const useRoom = () => {
   }, [roomId]);
 
   return {
+    changeRoomTitle,
     isLoadingRoom,
     createRoom,
     getRoom,
