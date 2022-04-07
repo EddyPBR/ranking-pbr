@@ -78,6 +78,10 @@ const RoomProvider: FC = ({ children }) => {
       await database.ref(`rooms/${room.id}`).update({
         title,
       });
+
+      setRoom({ ...room, title });
+
+      SuccessToast({ message: "Title was changed!" });
     } catch (error: any) {
       ErrorToast({ message: error?.message ?? "Failed to change title" });
     }
