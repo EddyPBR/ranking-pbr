@@ -1,28 +1,52 @@
-import type { FC } from "react";
+import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import ReactModal from "react-modal";
 
+import { ErrorToast } from "@components/Toasts";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useRoom } from "@hooks/useRoom";
+import * as yup from "yup";
 
 type Props = {
   isOpen: boolean;
   handleCloseModal: () => void;
 };
 
-type FormInputs = {
+type Inputs = {
   room_title: string;
 };
 
+const changeTitleSchema = yup
+  .object({
+    room_title: yup.string().trim().min(3).max(100).required(),
+  })
+  .required();
+
 const ChangeRoomTitleModal: FC<Props> = ({ isOpen, handleCloseModal }) => {
-  const { handleSubmit, register } = useForm<FormInputs>();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<Inputs>({
+    resolver: yupResolver(changeTitleSchema),
+  });
   const { handleChangeRoomTitle, room, isLoadingRoom } = useRoom();
 
-  const handleSubmitRoomTitle = async ({ room_title }: FormInputs) => {
+  const handleSubmitRoomTitle = async ({ room_title }: Inputs) => {
     await handleChangeRoomTitle(room_title);
+    handleCloseModal();
   };
 
   const canSubmit = () => !isLoadingRoom && !!room?.id;
+
+  useEffect(() => {
+    if (!errors.room_title?.message) {
+      return;
+    }
+
+    ErrorToast({ message: errors.room_title?.message });
+  }, [errors]);
 
   return (
     <ReactModal
@@ -72,7 +96,7 @@ const ChangeRoomTitleModal: FC<Props> = ({ isOpen, handleCloseModal }) => {
           <div className="flex items-center gap-4 mt-4">
             <button
               type="submit"
-              disabled={canSubmit()}
+              disabled={!canSubmit()}
               className="bg-indigo-500 hover:bg-indigo-600 h-12 w-36 rounded shadow text-white transition-colors disabled:cursor-not-allowed disabled:hover:bg-indigo-500"
             >
               Change title
