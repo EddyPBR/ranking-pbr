@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import { Header } from "@components/Header";
 import { PlayersTable } from "@components/PlayersTable";
 import { RoomHeader } from "@components/RoomHeader";
 import { SEO } from "@components/SEO";
 import { ErrorToast } from "@components/Toasts";
-import { useAuth } from "@hooks/useAuth";
 import { useRoom } from "@hooks/useRoom";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
@@ -88,16 +87,17 @@ const examplePlayers = [
 
 const Page: NextPage = () => {
   const router = useRouter();
-  const { isLoadingRoom, setRoomId, roomId, room } = useRoom();
+  const { isLoadingRoom, room, handleLoadRoom } = useRoom();
 
   useEffect(() => {
     const roomId = router.query.id as string;
+
     if (!roomId) {
       return;
     }
 
-    setRoomId(roomId);
-  }, [router.query.id, setRoomId]);
+    handleLoadRoom(roomId);
+  }, [router.query.id]);
 
   useEffect(() => {
     if (!isLoadingRoom && !room) {
@@ -113,7 +113,7 @@ const Page: NextPage = () => {
         description="Ranking PBR - Room created by someone"
       />
 
-      <Header roomId={roomId} />
+      <Header roomId={room?.id} />
 
       <main className="container py-12 mx-auto w-full flex flex-col min-h-[calc(100vh-8rem)] justify-center align-center items-center px-4">
         <RoomHeader
