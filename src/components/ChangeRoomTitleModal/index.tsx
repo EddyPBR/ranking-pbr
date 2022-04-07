@@ -1,9 +1,8 @@
-import { FC, useState } from "react";
+import type { FC } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import ReactModal from "react-modal";
 
-import { SuccessToast, ErrorToast } from "@components/Toasts";
 import { useRoom } from "@hooks/useRoom";
 
 type Props = {
@@ -12,31 +11,18 @@ type Props = {
 };
 
 type FormInputs = {
-  roomTitle: string;
+  room_title: string;
 };
 
 const ChangeRoomTitleModal: FC<Props> = ({ isOpen, handleCloseModal }) => {
   const { handleSubmit, register } = useForm<FormInputs>();
-  const { changeRoomTitle, room, roomId } = useRoom();
+  const { handleChangeRoomTitle, room, isLoadingRoom } = useRoom();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const handleChangeRoomTitle = async ({ roomTitle }: FormInputs) => {
-    if (!roomId) {
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      await changeRoomTitle(roomId, roomTitle);
-      SuccessToast({ message: "Room's title was changed" });
-    } catch (error: any) {
-      ErrorToast({ message: error?.message ?? "Unknown error occurs" });
-    } finally {
-      setIsLoading(false);
-    }
+  const handleSubmitRoomTitle = async ({ room_title }: FormInputs) => {
+    await handleChangeRoomTitle(room_title);
   };
+
+  const canSubmit = () => !isLoadingRoom && !!room?.id;
 
   return (
     <ReactModal
@@ -64,7 +50,7 @@ const ChangeRoomTitleModal: FC<Props> = ({ isOpen, handleCloseModal }) => {
 
         <form
           className="flex flex-col gap-4 w-full mt-12"
-          onSubmit={handleSubmit(handleChangeRoomTitle)}
+          onSubmit={handleSubmit(handleSubmitRoomTitle)}
         >
           <div className="flex flex-col gap-0.5">
             <label
@@ -79,14 +65,14 @@ const ChangeRoomTitleModal: FC<Props> = ({ isOpen, handleCloseModal }) => {
               placeholder={room?.title}
               className="h-12 w-full border bg-white border-gray-300 rounded px-4 text-gray-600"
               autoComplete="off"
-              {...register("roomTitle")}
+              {...register("room_title")}
             />
           </div>
 
           <div className="flex items-center gap-4 mt-4">
             <button
               type="submit"
-              disabled={isLoading || !roomId}
+              disabled={canSubmit()}
               className="bg-indigo-500 hover:bg-indigo-600 h-12 w-36 rounded shadow text-white transition-colors disabled:cursor-not-allowed disabled:hover:bg-indigo-500"
             >
               Change title
