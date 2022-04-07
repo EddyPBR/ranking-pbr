@@ -1,12 +1,10 @@
 import { FC, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { SuccessToast, ErrorToast } from "@components/Toasts";
+import { ErrorToast } from "@components/Toasts";
 import { UserDropdownMenu } from "@components/UserDropdownMenu";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAuth } from "@hooks/useAuth";
 import { useRoom } from "@hooks/useRoom";
-import { useRouter } from "next/router";
 import * as yup from "yup";
 
 type Inputs = {
@@ -15,14 +13,12 @@ type Inputs = {
 
 const createRoomSchema = yup
   .object({
-    room_title: yup.string().trim().min(3).max(255).required(),
+    room_title: yup.string().trim().min(3).max(100).required(),
   })
   .required();
 
 const CreateRoom: FC = () => {
-  const router = useRouter();
-  const { user } = useAuth();
-  const { createRoom } = useRoom();
+  const { handleCreateRoom } = useRoom();
 
   const {
     register,
@@ -32,23 +28,10 @@ const CreateRoom: FC = () => {
     resolver: yupResolver(createRoomSchema),
   });
 
-  const handleCreateRoom: SubmitHandler<Inputs> = async ({ room_title }) => {
-    if (!user) {
-      ErrorToast({ message: "You are not logged in!" });
-      return;
-    }
-
-    try {
-      const { key } = await createRoom(room_title);
-
-      SuccessToast({ message: "room created with success!" });
-
-      router.push(`room/${key}`);
-    } catch (error: any) {
-      ErrorToast({
-        message: error?.message ?? "Failed to create",
-      });
-    }
+  const handleSubmitCreateRoom: SubmitHandler<Inputs> = async ({
+    room_title,
+  }) => {
+    await handleCreateRoom(room_title);
   };
 
   useEffect(() => {
@@ -65,7 +48,10 @@ const CreateRoom: FC = () => {
         <UserDropdownMenu />
       </div>
 
-      <form onSubmit={handleSubmit(handleCreateRoom)} className="mb-6 w-full">
+      <form
+        onSubmit={handleSubmit(handleSubmitCreateRoom)}
+        className="mb-6 w-full"
+      >
         <input
           type="text"
           id="room_title"
