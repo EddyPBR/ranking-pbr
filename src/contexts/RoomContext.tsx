@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type { Dispatch, FC, SetStateAction } from "react";
 import { useState, createContext } from "react";
 
 import { ErrorToast, SuccessToast } from "@components/Toasts";
@@ -10,11 +10,14 @@ type Room = {
   id: string;
   authorId: string;
   title: string;
+  isClosed?: boolean;
 };
 
 type RoomContextType = {
   room: Room | undefined;
   isLoadingRoom: boolean;
+  handleCleanRoom: () => void;
+  handleCloseRoom: () => Promise<void>;
   handleLoadRoom: (roomId: string) => Promise<void>;
   handleCreateRoom: (title: string) => Promise<void>;
   handleChangeRoomTitle: (title: string) => Promise<void>;
@@ -87,12 +90,36 @@ const RoomProvider: FC = ({ children }) => {
     }
   };
 
+  const handleCloseRoom = async () => {
+    if (!user || !room?.id) {
+      ErrorToast({ message: "Unauthorized, please login!" });
+      return;
+    }
+
+    try {
+      await database.ref(`rooms/${room.id}`).update({
+        isClosed: true,
+      });
+
+      setRoom({ ...room, isClosed: true });
+    } catch (error: any) {
+      ErrorToast({ message: error?.message ?? "Failed to close room" });
+    }
+  };
+
+  const handleCleanRoom = () => {
+    setIsLoadingRoom(true);
+    setRoom(undefined);
+  };
+
   return (
     <RoomContext.Provider
       value={{
         room,
         isLoadingRoom,
         handleLoadRoom,
+        handleCleanRoom,
+        handleCloseRoom,
         handleCreateRoom,
         handleChangeRoomTitle,
       }}
