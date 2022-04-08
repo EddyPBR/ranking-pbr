@@ -87,7 +87,7 @@ const examplePlayers = [
 
 const Page: NextPage = () => {
   const router = useRouter();
-  const { isLoadingRoom, room, handleLoadRoom } = useRoom();
+  const { isLoadingRoom, room, handleLoadRoom, handleCleanRoom } = useRoom();
 
   useEffect(() => {
     const roomId = router.query.id as string;
@@ -103,8 +103,16 @@ const Page: NextPage = () => {
     if (!isLoadingRoom && !room) {
       ErrorToast({ message: "Room not found :(" });
       router.push("/");
+      return;
     }
-  }, [isLoadingRoom, room, router]);
+
+    if (room?.isClosed) {
+      ErrorToast({ message: "Room was closed :(" });
+      handleCleanRoom();
+      router.push("/");
+      return;
+    }
+  }, [isLoadingRoom, room, router, handleCleanRoom]);
 
   return (
     <>
