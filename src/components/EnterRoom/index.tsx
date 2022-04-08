@@ -1,29 +1,52 @@
-import type { FC } from "react";
+import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
+import { ErrorToast } from "@components/Toasts";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/router";
+import * as yup from "yup";
+
+const enterRoomSchema = yup
+  .object({
+    room_title: yup.string().trim().min(3).max(100).required(),
+  })
+  .required();
 
 type FormInputs = {
-  roomCode: string;
+  room_title: string;
 };
 
 const EnterRoom: FC = () => {
   const router = useRouter();
-  const { handleSubmit, register } = useForm<FormInputs>();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<FormInputs>({
+    resolver: yupResolver(enterRoomSchema),
+  });
 
-  const handleEnterRoom = ({ roomCode }: FormInputs) => {
-    router.push(`/room/${roomCode}`);
+  const handleEnterRoom = ({ room_title }: FormInputs) => {
+    router.push(`/room/${room_title}`);
   };
+
+  useEffect(() => {
+    if (!errors.room_title?.message) {
+      return;
+    }
+
+    ErrorToast({ message: errors.room_title?.message });
+  }, [errors]);
 
   return (
     <form onSubmit={handleSubmit(handleEnterRoom)} className="flex flex-col">
       <input
         type="text"
-        id="roomCode"
+        id="room_code"
         placeholder="Room code..."
         aria-label="enter the room code"
         className="bg-white border h-12 px-4 mb-4 font-sans rounded border-gray-300"
-        {...register("roomCode", {
+        {...register("room_title", {
           required: true,
         })}
       />
