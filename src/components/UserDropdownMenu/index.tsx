@@ -2,6 +2,7 @@ import { useState, useRef, FC } from "react";
 import Skeleton from "react-loading-skeleton";
 
 import { ChangeRoomTitleModal } from "@components/ChangeRoomTitleModal";
+import { CloseRoomModal } from "@components/CloseRoomModal";
 import { useAuth } from "@hooks/useAuth";
 import { useOnClickOutside } from "@hooks/useOnClickOutside";
 import Image from "next/image";
@@ -20,6 +21,7 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [showChangeTitleModal, setShowChangeTitleModal] =
     useState<boolean>(false);
+  const [showCloseRoomModal, setShowCloseRoomModal] = useState<boolean>(false);
 
   useOnClickOutside(userDropdownMenuRef, () => setShowDropdown(false));
 
@@ -107,6 +109,7 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
             <li>
               <button
                 type="button"
+                onClick={() => setShowCloseRoomModal(true)}
                 className="block py-2 px-4 w-full text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
               >
                 Close room
@@ -128,6 +131,11 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
       <ChangeRoomTitleModal
         isOpen={showChangeTitleModal}
         handleCloseModal={() => setShowChangeTitleModal(false)}
+      />
+
+      <CloseRoomModal
+        isOpen={showCloseRoomModal}
+        handleCloseModal={() => setShowCloseRoomModal(false)}
       />
     </div>
   );
