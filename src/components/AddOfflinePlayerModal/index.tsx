@@ -14,12 +14,12 @@ type Props = {
 };
 
 type Inputs = {
-  name: string;
+  username: string;
 };
 
 const offlinePlayerSchema = yup
   .object({
-    name: yup.string().trim().min(3).max(100).required(),
+    username: yup.string().trim().min(3).max(100).required(),
   })
   .required();
 
@@ -33,19 +33,19 @@ const AddOfflinePlayerModal: FC<Props> = ({ isOpen, handleCloseModal }) => {
   });
   const { handleAddOfflinePlayer, room, isLoadingRoom } = useRoom();
 
-  const handleSubmitRoomTitle = async ({ name }: Inputs) => {
-    await handleAddOfflinePlayer(name);
+  const handleSubmitRoomTitle = async ({ username }: Inputs) => {
+    await handleAddOfflinePlayer(username);
     handleCloseModal();
   };
 
   const canSubmit = () => !isLoadingRoom && !!room?.id;
 
   useEffect(() => {
-    if (!errors.name?.message) {
+    if (!errors.username?.message) {
       return;
     }
 
-    ErrorToast({ message: errors.name?.message });
+    ErrorToast({ message: errors.username?.message });
   }, [errors]);
 
   return (
@@ -89,7 +89,7 @@ const AddOfflinePlayerModal: FC<Props> = ({ isOpen, handleCloseModal }) => {
               placeholder="Jane Doe"
               className="h-12 w-full border bg-white border-gray-300 rounded px-4 text-gray-600"
               autoComplete="off"
-              {...register("name")}
+              {...register("username")}
             />
           </div>
 
