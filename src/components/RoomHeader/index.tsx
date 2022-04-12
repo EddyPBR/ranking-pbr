@@ -19,7 +19,7 @@ const RoomHeader: FC<RoomHeaderProps> = ({ playersQuantity, roomTitle }) => {
 
         <div className="text-white flex items-center gap-1">
           <AiOutlineEye size={24} />
-          <span className="text-sm">Online players:</span>
+          <span className="text-sm">players:</span>
           {playersQuantity ? (
             <strong className="ml-1">{playersQuantity}</strong>
           ) : (
