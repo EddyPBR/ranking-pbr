@@ -3,11 +3,13 @@ import { TiPlus, TiMinus } from "react-icons/ti";
 
 import Image from "next/image";
 
-interface Player {
-  image_url?: string;
-  username: string;
+type Player = {
+  id: string;
   points: number;
-}
+  username: string;
+  image_url?: string;
+  isOfflinePlayer?: boolean;
+};
 
 interface PlayerTableProps {
   players: Player[];
@@ -44,7 +46,7 @@ const PlayersTable: FC<PlayerTableProps> = ({ players }) => {
                 <td className="px-5 py-5 border-b border-gray-200 text-sm text-center sm:text-left text-gray-700">
                   <div className="flex items-center flex-col sm:flex-row">
                     <Image
-                      src={player.image_url ?? ""}
+                      src={player.image_url ?? "/assets/profile-default.svg"}
                       alt={player.username}
                       width="44"
                       height="44"
