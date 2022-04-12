@@ -9,82 +9,6 @@ import { useRoom } from "@hooks/useRoom";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 
-const examplePlayers = [
-  {
-    image_url:
-      "https://lh3.googleusercontent.com/ogw/ADea4I4tzhTmtjLgaho1DvfmlZX1COOjTJJD5lpIT7IwnA=s32-c-mo",
-    username: "Edvaldo Junior",
-    points: 30,
-  },
-  {
-    image_url:
-      "https://lh3.googleusercontent.com/ogw/ADea4I4tzhTmtjLgaho1DvfmlZX1COOjTJJD5lpIT7IwnA=s32-c-mo",
-    username: "Edvaldo Junior",
-    points: 27,
-  },
-  {
-    image_url:
-      "https://lh3.googleusercontent.com/ogw/ADea4I4tzhTmtjLgaho1DvfmlZX1COOjTJJD5lpIT7IwnA=s32-c-mo",
-    username: "Edvaldo Junior",
-    points: 24,
-  },
-  {
-    image_url:
-      "https://lh3.googleusercontent.com/ogw/ADea4I4tzhTmtjLgaho1DvfmlZX1COOjTJJD5lpIT7IwnA=s32-c-mo",
-    username: "Edvaldo Junior",
-    points: 12,
-  },
-  {
-    image_url:
-      "https://lh3.googleusercontent.com/ogw/ADea4I4tzhTmtjLgaho1DvfmlZX1COOjTJJD5lpIT7IwnA=s32-c-mo",
-    username: "Edvaldo Junior",
-    points: 12,
-  },
-  {
-    image_url:
-      "https://lh3.googleusercontent.com/ogw/ADea4I4tzhTmtjLgaho1DvfmlZX1COOjTJJD5lpIT7IwnA=s32-c-mo",
-    username: "Edvaldo Junior",
-    points: 12,
-  },
-  {
-    image_url:
-      "https://lh3.googleusercontent.com/ogw/ADea4I4tzhTmtjLgaho1DvfmlZX1COOjTJJD5lpIT7IwnA=s32-c-mo",
-    username: "Edvaldo Junior",
-    points: 12,
-  },
-  {
-    image_url:
-      "https://lh3.googleusercontent.com/ogw/ADea4I4tzhTmtjLgaho1DvfmlZX1COOjTJJD5lpIT7IwnA=s32-c-mo",
-    username: "Edvaldo Junior",
-    points: 12,
-  },
-  {
-    image_url:
-      "https://lh3.googleusercontent.com/ogw/ADea4I4tzhTmtjLgaho1DvfmlZX1COOjTJJD5lpIT7IwnA=s32-c-mo",
-    username: "Edvaldo Junior",
-    points: 12,
-  },
-  {
-    image_url:
-      "https://lh3.googleusercontent.com/ogw/ADea4I4tzhTmtjLgaho1DvfmlZX1COOjTJJD5lpIT7IwnA=s32-c-mo",
-    username: "Edvaldo Junior",
-    points: 12,
-  },
-  {
-    image_url:
-      "https://lh3.googleusercontent.com/ogw/ADea4I4tzhTmtjLgaho1DvfmlZX1COOjTJJD5lpIT7IwnA=s32-c-mo",
-    username: "Edvaldo Junior",
-    points: 12,
-  },
-
-  {
-    image_url:
-      "https://lh3.googleusercontent.com/ogw/ADea4I4tzhTmtjLgaho1DvfmlZX1COOjTJJD5lpIT7IwnA=s32-c-mo",
-    username: "Edvaldo Junior",
-    points: 12,
-  },
-];
-
 const Page: NextPage = () => {
   const router = useRouter();
   const { isLoadingRoom, room, handleLoadRoom, handleCleanRoom } = useRoom();
@@ -125,10 +49,10 @@ const Page: NextPage = () => {
 
       <main className="container py-12 mx-auto w-full flex flex-col min-h-[calc(100vh-8rem)] justify-center align-center items-center px-4">
         <RoomHeader
-          playersQuantity={examplePlayers.length}
+          playersQuantity={room?.players.length ?? 0}
           roomTitle={room?.title}
         />
-        <PlayersTable players={examplePlayers} />
+        <PlayersTable players={room?.players ?? []} />
       </main>
     </>
   );
