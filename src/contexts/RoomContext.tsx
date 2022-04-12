@@ -1,4 +1,4 @@
-import type { Dispatch, FC, SetStateAction } from "react";
+import type { FC } from "react";
 import { useState, createContext } from "react";
 
 import { ErrorToast, SuccessToast } from "@components/Toasts";
@@ -6,11 +6,18 @@ import { useAuth } from "@hooks/useAuth";
 import { database } from "@services/firebase";
 import { useRouter } from "next/router";
 
+type Player = {
+  name: string;
+  points: number;
+  isOfflinePlayer?: boolean;
+};
+
 type Room = {
   id: string;
   authorId: string;
   title: string;
   isClosed?: boolean;
+  players?: Record<string, Player>;
 };
 
 type RoomContextType = {
@@ -21,6 +28,7 @@ type RoomContextType = {
   handleLoadRoom: (roomId: string) => Promise<void>;
   handleCreateRoom: (title: string) => Promise<void>;
   handleChangeRoomTitle: (title: string) => Promise<void>;
+  handleAddOfflinePlayer: (name: string) => Promise<void>;
 };
 
 const RoomContext = createContext({} as RoomContextType);
@@ -112,6 +120,29 @@ const RoomProvider: FC = ({ children }) => {
     setRoom(undefined);
   };
 
+  const handleAddOfflinePlayer = async (name: string) => {
+    if (!user || !room?.id) {
+      ErrorToast({ message: "Unauthorized, please login!" });
+      return;
+    }
+
+    const newPlayer = {
+      name,
+      points: 0,
+      isOfflinePlayer: true,
+    };
+
+    try {
+      await database.ref(`rooms/${room.id}/players`).push({
+        ...newPlayer,
+      });
+
+      SuccessToast({ message: "Player added!" });
+    } catch (error: any) {
+      ErrorToast({ message: error?.message ?? "Failed to add a player" });
+    }
+  };
+
   return (
     <RoomContext.Provider
       value={{
@@ -122,6 +153,7 @@ const RoomProvider: FC = ({ children }) => {
         handleCloseRoom,
         handleCreateRoom,
         handleChangeRoomTitle,
+        handleAddOfflinePlayer,
       }}
     >
       {children}
