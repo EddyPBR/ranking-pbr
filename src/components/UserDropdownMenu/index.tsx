@@ -1,6 +1,7 @@
 import { useState, useRef, FC } from "react";
 import Skeleton from "react-loading-skeleton";
 
+import { AddOfflinePlayerModal } from "@components/AddOfflinePlayerModal";
 import { ChangeRoomTitleModal } from "@components/ChangeRoomTitleModal";
 import { CloseRoomModal } from "@components/CloseRoomModal";
 import { useAuth } from "@hooks/useAuth";
@@ -22,6 +23,8 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
   const [showChangeTitleModal, setShowChangeTitleModal] =
     useState<boolean>(false);
   const [showCloseRoomModal, setShowCloseRoomModal] = useState<boolean>(false);
+  const [showAddOfflinePlayerModal, setShowAddOfflinePlayerModal] =
+    useState<boolean>(false);
 
   useOnClickOutside(userDropdownMenuRef, () => setShowDropdown(false));
 
@@ -101,6 +104,7 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
             <li>
               <button
                 type="button"
+                onClick={() => setShowAddOfflinePlayerModal(true)}
                 className="block py-2 px-4 w-full text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
               >
                 Add offline player
@@ -120,8 +124,8 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
         <div className="py-1">
           <button
             type="button"
-            className="block py-2 px-4 w-full text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
             onClick={handleLogoutWithGoogleAndRedirect}
+            className="block py-2 px-4 w-full text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
           >
             Logout
           </button>
@@ -136,6 +140,11 @@ const UserDropdownMenu: FC<UserDropdownMenuProps> = ({ inRoom }) => {
       <CloseRoomModal
         isOpen={showCloseRoomModal}
         handleCloseModal={() => setShowCloseRoomModal(false)}
+      />
+
+      <AddOfflinePlayerModal
+        isOpen={showAddOfflinePlayerModal}
+        handleCloseModal={() => setShowAddOfflinePlayerModal(false)}
       />
     </div>
   );
