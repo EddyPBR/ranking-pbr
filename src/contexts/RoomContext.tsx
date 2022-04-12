@@ -7,8 +7,10 @@ import { database } from "@services/firebase";
 import { useRouter } from "next/router";
 
 type Player = {
-  name: string;
+  id: string;
   points: number;
+  username: string;
+  image_url?: string;
   isOfflinePlayer?: boolean;
 };
 
@@ -17,7 +19,7 @@ type Room = {
   authorId: string;
   title: string;
   isClosed?: boolean;
-  players?: Record<string, Player>;
+  players: Player[];
 };
 
 type RoomContextType = {
@@ -43,12 +45,32 @@ const RoomProvider: FC = ({ children }) => {
   const handleLoadRoom = async (roomId: string) => {
     setIsLoadingRoom(true);
 
+    const parsePlayersRecordToArray = (
+      // eslint-disable-next-line prettier/prettier
+      record: Record<string, Omit<Player, "id">>,
+    ) => {
+      const parsedObject = Object.entries(record).map(([key, values]) => {
+        return {
+          id: key,
+          ...values,
+        };
+      });
+
+      return parsedObject;
+    };
+
     try {
       const roomSnapshot = await database.ref(`rooms/${roomId}`).get();
 
-      const roomData: Room = roomSnapshot.val();
+      const roomData = roomSnapshot.val();
 
-      setRoom({ ...roomData, id: roomId });
+      setRoom({
+        ...roomData,
+        id: roomId,
+        players: roomData?.players
+          ? parsePlayersRecordToArray(roomData.players)
+          : [],
+      });
     } catch (error: any) {
       ErrorToast({ message: error?.message ?? "Failed to load room" });
     } finally {
