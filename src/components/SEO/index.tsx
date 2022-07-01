@@ -2,10 +2,10 @@ import { FC } from "react";
 
 import Head from "next/head";
 
-interface SEOProps {
+export type SEOProps = {
   title: string;
   description: string;
-}
+};
 
 const SEO: FC<SEOProps> = ({ title, description }) => {
   return (
