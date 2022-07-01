@@ -10,7 +10,7 @@ export default class MyDocument extends Document {
           <meta charSet="utf-8" />
           <link rel="shortcut icon" href="/favicon.ico" type="image/ico" />
           <link rel="manifest" href="/manifest.json" />
-          <meta name="msapplication-TileColor" content="#FAFAFA" />
+          <meta name="msapplication-TileColor" content="#F7FAFC" />
           <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
           <meta name="theme-color" content="#4F46E5" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -28,7 +28,7 @@ export default class MyDocument extends Document {
           <meta property="og:url" content={`${process.env.VERCEL_URL}`} />
           <meta
             property="og:image"
-            content={`${process.env.VERCEL_URL}/public/thumbnail.jpg`}
+            content={`${process.env.VERCEL_URL}/public/thumbnails/thumbnail-us.jpg`}
           />
           <meta
             property="og:image:alt"
@@ -48,7 +48,7 @@ export default class MyDocument extends Document {
           />
           <meta
             property="og:image:secure_url"
-            content={`${process.env.VERCEL_URL}/public/thumbnail.jpg`}
+            content={`${process.env.VERCEL_URL}/public/thumbnails/thumbnail-us.jpg`}
           />
           <meta name="twitter:card" content="summary_large_image" />
           <meta
@@ -58,7 +58,7 @@ export default class MyDocument extends Document {
           <meta name="twitter:url" content={`${process.env.VERCEL_URL}`} />
           <meta
             name="twitter:image"
-            content={`${process.env.VERCEL_URL}/public/thumbnail.jpg`}
+            content={`${process.env.VERCEL_URL}/public/thumbnails/thumbnail-us.jpg`}
           />
           <link
             href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Open+Sans:wght@400;700&display=swap"

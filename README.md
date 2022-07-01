@@ -2,7 +2,6 @@
 
 A system for scoring games or pranks with friends
 
-
 ### COMMITS
 
 You need install commitizen globally for commits in this project, just follow the steps
