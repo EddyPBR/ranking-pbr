@@ -15,12 +15,25 @@ import {
   ListIcon,
   Divider,
   Link,
+  ModalOverlay,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  FormControl,
+  FormLabel,
+  Input,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { SEO } from "~components/SEO";
 import type { NextPage } from "next";
 import NextLink from "next/link";
 
 const Page: NextPage = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
       <SEO
@@ -49,6 +62,9 @@ const Page: NextPage = () => {
             <Button
               colorScheme="green"
               leftIcon={<AiOutlinePlus fontSize={18} />}
+              onClick={() => {
+                onOpen();
+              }}
             >
               New room
             </Button>
@@ -94,6 +110,30 @@ const Page: NextPage = () => {
           </Flex>
         </Center>
       </Flex>
+      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay
+          bg="rgba(0,0,0,.75)"
+          backdropFilter="blur(10px) hue-rotate(90deg)"
+        />
+        <ModalContent>
+          <ModalHeader>Crete room</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormControl>
+              <FormLabel htmlFor="room">Room&apos;s title</FormLabel>
+              <Input id="room" type="text" placeholder="Input room's name" />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter gap="2">
+            <Button variant="ghost" colorScheme="red" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button type="submit" colorScheme="green">
+              Create
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };
