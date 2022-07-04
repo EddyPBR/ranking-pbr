@@ -9,6 +9,8 @@ import {
   Button,
   Tooltip,
   useToast,
+  Box,
+  Container,
 } from "@chakra-ui/react";
 import { Profile } from "~components/Profile";
 import { SEO } from "~components/SEO";
@@ -45,28 +47,32 @@ const Page: NextPage = () => {
   return (
     <>
       <SEO
-        title="Admin room | Ranking PBR"
+        title="Room | Ranking PBR"
         description="Ranking PBR - Scoring games or pranks online with your friends"
       />
-      <Flex backgroundColor="primary.500" height="4.5rem" padding="0 2.5rem">
-        <Center>
-          <Profile theme="dark" />
-        </Center>
+      <Box backgroundColor="primary.500" height="4rem">
+        <Container maxW="container.xl">
+          <Flex>
+            <Center>
+              <Profile theme="dark" />
+            </Center>
 
-        <Spacer />
+            <Spacer />
 
-        <Center>
-          <Tooltip label="Copy room code">
-            <Button
-              leftIcon={<BiCopy fontSize={18} />}
-              onClick={handleCopyRoomCode}
-              backgroundColor="white"
-            >
-              {roomId}
-            </Button>
-          </Tooltip>
-        </Center>
-      </Flex>
+            <Center>
+              <Tooltip label="Copy room code">
+                <Button
+                  leftIcon={<BiCopy fontSize={18} />}
+                  onClick={handleCopyRoomCode}
+                  backgroundColor="white"
+                >
+                  {roomId}
+                </Button>
+              </Tooltip>
+            </Center>
+          </Flex>
+        </Container>
+      </Box>
     </>
   );
 };
