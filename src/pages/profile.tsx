@@ -27,6 +27,7 @@ import {
   Input,
   useDisclosure,
 } from "@chakra-ui/react";
+import { Profile } from "~components/Profile";
 import { SEO } from "~components/SEO";
 import type { NextPage } from "next";
 import NextLink from "next/link";
@@ -49,15 +50,11 @@ const Page: NextPage = () => {
           gap="2rem"
         >
           <Flex width="100%">
-            <Stack direction={["column", "row"]} spacing="0.5rem">
-              <Avatar size="md" name="Nome do usuário" src="" />
-              <Stack direction={["column", "column"]} spacing="0">
-                <Text size="sm" color="grey">
-                  Bem-vindo(a),
-                </Text>
-                <Heading size="sm">Nome do usuário</Heading>
-              </Stack>
-            </Stack>
+            <Profile
+              canChangeRoomName={false}
+              canCloseRoom={false}
+              showLogoutDivider={false}
+            />
             <Spacer />
             <Button
               colorScheme="green"
