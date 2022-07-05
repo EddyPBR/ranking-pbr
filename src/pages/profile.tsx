@@ -1,20 +1,9 @@
 import { AiOutlinePlus } from "react-icons/ai";
-import { BsDoorOpen, BsDoorClosed } from "react-icons/bs";
 
 import {
-  Heading,
-  Text,
   Flex,
-  Stack,
-  Avatar,
-  Center,
   Spacer,
   Button,
-  List,
-  ListItem,
-  ListIcon,
-  Divider,
-  Link,
   ModalOverlay,
   Modal,
   ModalContent,
@@ -26,11 +15,15 @@ import {
   FormLabel,
   Input,
   useDisclosure,
+  Box,
+  Container,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 import { Profile } from "~components/Profile";
+import { RoomCard } from "~components/RoomCard";
 import { SEO } from "~components/SEO";
 import type { NextPage } from "next";
-import NextLink from "next/link";
 
 const Page: NextPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,15 +34,9 @@ const Page: NextPage = () => {
         title="Profile | Ranking PBR"
         description="Ranking PBR - Scoring games or pranks online with your friends"
       />
-      <Flex height="100vh">
-        <Center
-          width="90vw"
-          maxWidth="720"
-          margin="0 auto"
-          flexDirection="column"
-          gap="2rem"
-        >
-          <Flex width="100%">
+      <Box marginTop="4.5rem">
+        <Container maxW="container.xl">
+          <Flex>
             <Profile
               canChangeRoomName={false}
               canCloseRoom={false}
@@ -66,47 +53,74 @@ const Page: NextPage = () => {
               New room
             </Button>
           </Flex>
-          <Flex width="100%" flexDirection="column">
-            <Heading size="sm">Created rooms</Heading>
-            <List
-              spacing={4}
-              margin="1rem 0"
-              minHeight="420"
-              height="100vh"
-              maxHeight="520"
-              overflowY="auto"
-            >
-              <ListItem>
-                <NextLink href="/room" passHref>
-                  <Link>
-                    <ListIcon as={BsDoorOpen} color="green.500" />
-                    Title of the room
-                  </Link>
-                </NextLink>
-                <Divider marginTop="0.225rem" />
-              </ListItem>
-              <ListItem>
-                <NextLink href="/room" passHref>
-                  <Link>
-                    <ListIcon as={BsDoorOpen} color="green.500" />
-                    Title of the room
-                  </Link>
-                </NextLink>
-                <Divider marginTop="0.225rem" />
-              </ListItem>
-              <ListItem>
-                <NextLink href="/room" passHref>
-                  <Link>
-                    <ListIcon as={BsDoorClosed} color="red.500" />
-                    Title of the room
-                  </Link>
-                </NextLink>
-                <Divider marginTop="0.225rem" />
-              </ListItem>
-            </List>
-          </Flex>
-        </Center>
-      </Flex>
+
+          <Grid
+            templateColumns="repeat(auto-fill, minmax(18.25rem, 1fr))"
+            gap={6}
+            margin="4rem auto 0 auto"
+          >
+            <GridItem w="100%" h="12rem" position="relative">
+              <RoomCard
+                createdAt="Created 3 days ago"
+                title="A great name for a room - is here!"
+                roomId="73r78u23r-0owro0-129640"
+                players={[
+                  {
+                    email: "player1@pbr.com",
+                    avatar: "https://bit.ly/ryan-florence",
+                  },
+                  {
+                    email: "player2@pbr.com",
+                    avatar: "https://bit.ly/sage-adebayo",
+                  },
+                  {
+                    email: "player3@pbr.com",
+                    avatar: "https://bit.ly/kent-c-dodds",
+                  },
+                  {
+                    email: "player4@pbr.com",
+                    avatar: "https://bit.ly/prosper-baba",
+                  },
+                  {
+                    email: "player5@pbr.com",
+                    avatar: "https://bit.ly/code-beast",
+                  },
+                ]}
+              />
+            </GridItem>
+            <GridItem w="100%" h="12rem" position="relative">
+              <RoomCard
+                createdAt="Created 3 days ago"
+                title="A great name for a room - is here!"
+                roomId="1q2w3e4r-213r21-213125"
+                isRoomClosed
+                players={[
+                  {
+                    email: "player1@pbr.com",
+                    avatar: "https://bit.ly/ryan-florence",
+                  },
+                  {
+                    email: "player2@pbr.com",
+                    avatar: "https://bit.ly/sage-adebayo",
+                  },
+                  {
+                    email: "player3@pbr.com",
+                    avatar: "https://bit.ly/kent-c-dodds",
+                  },
+                  {
+                    email: "player4@pbr.com",
+                    avatar: "https://bit.ly/prosper-baba",
+                  },
+                  {
+                    email: "player5@pbr.com",
+                    avatar: "https://bit.ly/code-beast",
+                  },
+                ]}
+              />
+            </GridItem>
+          </Grid>
+        </Container>
+      </Box>
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay
           bg="rgba(0,0,0,.75)"
