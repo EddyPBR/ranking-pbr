@@ -40,6 +40,7 @@ const Page: NextPage = () => {
             <Profile
               canChangeRoomName={false}
               canCloseRoom={false}
+              canBackToProfile={false}
               showLogoutDivider={false}
             />
             <Spacer />
