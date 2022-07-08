@@ -86,7 +86,7 @@ const Profile: FC<ProfileProps> = ({
             </Stack>
           </Stack>
         </MenuButton>
-        <MenuList>
+        <MenuList zIndex="2">
           {canChangeRoomName && (
             <MenuItem onClick={() => onChangeRoomTitleModalOpen(true)}>
               Change room&apos;s title
