@@ -23,25 +23,36 @@ import {
   Input,
   ModalFooter,
   Link,
+  SkeletonCircle,
+  Skeleton,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 type ProfileProps = {
   theme?: "light" | "dark";
-  canChangeRoomName?: boolean;
-  canCloseRoom?: boolean;
-  canBackToProfile?: boolean;
-  canLogout?: boolean;
-  showLogoutDivider?: boolean;
+  user?: {
+    username?: string;
+    avatarUrl?: string;
+  };
+  options?: {
+    canChangeRoomName?: boolean;
+    canCloseRoom?: boolean;
+    canBackToProfile?: boolean;
+    canLogout?: boolean;
+    showLogoutDivider?: boolean;
+  };
 };
 
 const Profile: FC<ProfileProps> = ({
   theme = "light",
-  canChangeRoomName = true,
-  canCloseRoom = true,
-  canBackToProfile = true,
-  canLogout = true,
-  showLogoutDivider = true,
+  user,
+  options = {
+    canChangeRoomName: true,
+    canCloseRoom: true,
+    canBackToProfile: true,
+    canLogout: true,
+    showLogoutDivider: true,
+  },
 }) => {
   const [isChangeRoomTitleModalOpen, setIsChangeRoomTitleModalOpen] =
     useState<boolean>(false);
@@ -66,46 +77,56 @@ const Profile: FC<ProfileProps> = ({
           height="4rem"
           padding="0"
         >
-          <Stack direction={["column", "row"]} alignItems="center">
-            <Avatar size="md" name="Nome do usuário" src="" />
-            <Stack direction={["column", "column"]} spacing="0">
-              <Text
-                size="sm"
-                color={`${theme === "light" ? "gray.700" : "gray.200"}`}
-                textAlign="left"
-                fontWeight="normal"
-              >
-                Bem-vindo(a),
-              </Text>
-              <Heading
-                size="sm"
-                color={`${theme === "light" ? "gray.700" : "white"}`}
-              >
-                Nome do usuário
-              </Heading>
+          {user ? (
+            <Stack direction={["column", "row"]} alignItems="center">
+              <Avatar size="md" name={user.username} src={user.avatarUrl} />
+              <Stack direction={["column", "column"]} spacing="0">
+                <Text
+                  size="sm"
+                  color={`${theme === "light" ? "gray.700" : "gray.200"}`}
+                  textAlign="left"
+                  fontWeight="normal"
+                >
+                  Welcome,
+                </Text>
+                <Heading
+                  size="sm"
+                  color={`${theme === "light" ? "gray.700" : "white"}`}
+                >
+                  {user.username}
+                </Heading>
+              </Stack>
             </Stack>
-          </Stack>
+          ) : (
+            <Stack direction={["column", "row"]} alignItems="center">
+              <SkeletonCircle size="3rem" />
+              <Stack direction={["column", "column"]} spacing="0">
+                <Skeleton height="1rem" width="6rem" marginBottom="0.5rem" />
+                <Skeleton height="1.25rem" width="8rem" />
+              </Stack>
+            </Stack>
+          )}
         </MenuButton>
         <MenuList zIndex="2">
-          {canChangeRoomName && (
+          {options.canChangeRoomName && (
             <MenuItem onClick={() => onChangeRoomTitleModalOpen(true)}>
               Change room&apos;s title
             </MenuItem>
           )}
-          {canCloseRoom && (
+          {options.canCloseRoom && (
             <MenuItem onClick={() => onChangeCloseRoomModalOpen(true)}>
               Close room
             </MenuItem>
           )}
-          {canBackToProfile && (
+          {options.canBackToProfile && (
             <NextLink href="/profile" passHref>
               <Link _hover={{ textDecoration: "none" }}>
                 <MenuItem>Profile</MenuItem>
               </Link>
             </NextLink>
           )}
-          {showLogoutDivider && <MenuDivider />}
-          {canLogout && (
+          {options.showLogoutDivider && <MenuDivider />}
+          {options.canLogout && (
             <MenuItem icon={<AiOutlinePoweroff fontSize={16} />}>
               Logout
             </MenuItem>
