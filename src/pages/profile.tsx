@@ -20,6 +20,7 @@ import {
   Grid,
   GridItem,
 } from "@chakra-ui/react";
+import { Header } from "~components/Header";
 import { Profile } from "~components/Profile";
 import { RoomCard } from "~components/RoomCard";
 import { SEO } from "~components/SEO";
@@ -34,6 +35,9 @@ const Page: NextPage = () => {
         title="Profile | Ranking PBR"
         description="Ranking PBR - Scoring games or pranks online with your friends"
       />
+
+      <Header />
+
       <Box marginTop="4.5rem">
         <Container maxW="container.xl">
           <Flex>
@@ -42,6 +46,7 @@ const Page: NextPage = () => {
               canCloseRoom={false}
               canBackToProfile={false}
               showLogoutDivider={false}
+              isLoading
             />
             <Spacer />
             <Button
