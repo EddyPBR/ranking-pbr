@@ -30,29 +30,26 @@ import NextLink from "next/link";
 
 type ProfileProps = {
   theme?: "light" | "dark";
-  user?: {
-    username?: string;
-    avatarUrl?: string;
-  };
-  options?: {
-    canChangeRoomName?: boolean;
-    canCloseRoom?: boolean;
-    canBackToProfile?: boolean;
-    canLogout?: boolean;
-    showLogoutDivider?: boolean;
-  };
+  username?: string;
+  avatarUrl?: string;
+  canChangeRoomName?: boolean;
+  canCloseRoom?: boolean;
+  canBackToProfile?: boolean;
+  canLogout?: boolean;
+  showLogoutDivider?: boolean;
+  isLoading?: boolean;
 };
 
 const Profile: FC<ProfileProps> = ({
   theme = "light",
-  user,
-  options = {
-    canChangeRoomName: true,
-    canCloseRoom: true,
-    canBackToProfile: true,
-    canLogout: true,
-    showLogoutDivider: true,
-  },
+  username,
+  avatarUrl,
+  canChangeRoomName = false,
+  canCloseRoom = false,
+  canBackToProfile = false,
+  canLogout = true,
+  showLogoutDivider = false,
+  isLoading = false,
 }) => {
   const [isChangeRoomTitleModalOpen, setIsChangeRoomTitleModalOpen] =
     useState<boolean>(false);
@@ -68,6 +65,18 @@ const Profile: FC<ProfileProps> = ({
     setIsCloseRoomModalOpen(value);
   };
 
+  if (isLoading) {
+    return (
+      <Stack direction={["column", "row"]} alignItems="center">
+        <SkeletonCircle size="3rem" />
+        <Stack direction={["column", "column"]} spacing="0">
+          <Skeleton height="1rem" width="6rem" marginBottom="0.5rem" />
+          <Skeleton height="1.25rem" width="8rem" />
+        </Stack>
+      </Stack>
+    );
+  }
+
   return (
     <>
       <Menu>
@@ -77,56 +86,46 @@ const Profile: FC<ProfileProps> = ({
           height="4rem"
           padding="0"
         >
-          {user ? (
-            <Stack direction={["column", "row"]} alignItems="center">
-              <Avatar size="md" name={user.username} src={user.avatarUrl} />
-              <Stack direction={["column", "column"]} spacing="0">
-                <Text
-                  size="sm"
-                  color={`${theme === "light" ? "gray.700" : "gray.200"}`}
-                  textAlign="left"
-                  fontWeight="normal"
-                >
-                  Welcome,
-                </Text>
-                <Heading
-                  size="sm"
-                  color={`${theme === "light" ? "gray.700" : "white"}`}
-                >
-                  {user.username}
-                </Heading>
-              </Stack>
+          <Stack direction={["column", "row"]} alignItems="center">
+            <Avatar size="md" name={username} src={avatarUrl} />
+            <Stack direction={["column", "column"]} spacing="0">
+              <Text
+                size="sm"
+                color={`${theme === "light" ? "gray.700" : "gray.200"}`}
+                textAlign="left"
+                fontWeight="normal"
+              >
+                Welcome,
+              </Text>
+              <Heading
+                size="sm"
+                color={`${theme === "light" ? "gray.700" : "white"}`}
+              >
+                {username}
+              </Heading>
             </Stack>
-          ) : (
-            <Stack direction={["column", "row"]} alignItems="center">
-              <SkeletonCircle size="3rem" />
-              <Stack direction={["column", "column"]} spacing="0">
-                <Skeleton height="1rem" width="6rem" marginBottom="0.5rem" />
-                <Skeleton height="1.25rem" width="8rem" />
-              </Stack>
-            </Stack>
-          )}
+          </Stack>
         </MenuButton>
         <MenuList zIndex="2">
-          {options.canChangeRoomName && (
+          {canChangeRoomName && (
             <MenuItem onClick={() => onChangeRoomTitleModalOpen(true)}>
               Change room&apos;s title
             </MenuItem>
           )}
-          {options.canCloseRoom && (
+          {canCloseRoom && (
             <MenuItem onClick={() => onChangeCloseRoomModalOpen(true)}>
               Close room
             </MenuItem>
           )}
-          {options.canBackToProfile && (
+          {canBackToProfile && (
             <NextLink href="/profile" passHref>
               <Link _hover={{ textDecoration: "none" }}>
                 <MenuItem>Profile</MenuItem>
               </Link>
             </NextLink>
           )}
-          {options.showLogoutDivider && <MenuDivider />}
-          {options.canLogout && (
+          {showLogoutDivider && <MenuDivider />}
+          {canLogout && (
             <MenuItem icon={<AiOutlinePoweroff fontSize={16} />}>
               Logout
             </MenuItem>
