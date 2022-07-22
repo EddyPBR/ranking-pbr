@@ -6,17 +6,53 @@ import {
   Box,
   Circle,
   Flex,
+  Skeleton,
+  SkeletonCircle,
   Text,
   VStack,
 } from "@chakra-ui/react";
 
-export type RankingTableProps = {
+export type RankingCardList = {
   isLoading?: boolean;
+  quantityLoadingItems?: number;
 };
 
-export const RankingCardList: FC = () => {
+export const RankingCardList: FC<RankingCardList> = ({
+  isLoading,
+  quantityLoadingItems = 5,
+}) => {
+  const loadingItems: null[] = new Array(quantityLoadingItems).fill(null);
+
+  if (isLoading) {
+    return (
+      <Flex flexDirection="column" gap="0.75rem">
+        {loadingItems.map((_, index) => (
+          <Box
+            key={index}
+            bg="white"
+            boxShadow="md"
+            w="100%"
+            padding="1rem"
+            borderRadius={2}
+            borderWidth={1}
+            borderColor="gray.200"
+          >
+            <Flex gap="0.5rem" alignItems="center" position="relative">
+              <SkeletonCircle size="3rem" />
+              <VStack align="flex-start">
+                <Skeleton width="6rem" maxWidth="12rem" height="1.125rem" />
+                <Skeleton width="3.5rem" maxWidth="12rem" height="1rem" />
+              </VStack>
+              <SkeletonCircle size="2.5rem" position="absolute" right={0} />
+            </Flex>
+          </Box>
+        ))}
+      </Flex>
+    );
+  }
+
   return (
-    <Flex flexDirection="column" gap="0.5rem">
+    <Flex flexDirection="column" gap="0.75rem">
       {Array(50)
         .fill(null)
         .map((_, index, arr) => (
@@ -25,7 +61,7 @@ export const RankingCardList: FC = () => {
             bg="white"
             boxShadow="md"
             w="100%"
-            padding="0.75rem"
+            padding="1rem"
             borderRadius={2}
             borderWidth={1}
             borderColor="gray.200"
@@ -58,7 +94,7 @@ export const RankingCardList: FC = () => {
               </VStack>
 
               <Circle
-                size="2rem"
+                size="2.5rem"
                 minWidth="min-content"
                 position="absolute"
                 bg="primary.500"
