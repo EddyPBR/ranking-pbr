@@ -21,7 +21,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gen:theme-type": "chakra-cli tokens ./src/styles/theme.ts"
+    "gen:theme-type": "chakra-cli tokens ./src/styles/theme.ts",
+    "commit": "cz",
+    "postinstall": "husky install",
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.2.1",
@@ -44,7 +48,7 @@
     "@types/react": "18.0.14",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
-    "commitizen": "^4.2.4",
+    "commitizen": "^4.2.5",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "^8.7.0",
     "eslint-config-next": "^12.2.0",
@@ -55,6 +59,7 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "husky": "^8.0.1",
+    "pinst": "^3.0.0",
     "prettier": "^2.5.1",
     "typescript": "4.7.4"
   },
