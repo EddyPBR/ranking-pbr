@@ -1,9 +1,14 @@
 import type { NextPage } from "next";
 
-import { Typography } from "antd";
+import { Typography, Button } from "antd";
 
 const Page: NextPage = () => {
-  return <Typography.Title>hello world</Typography.Title>;
+  return (
+    <>
+      <Typography.Title>hello world</Typography.Title>
+      <Button type="primary">Teste</Button>
+    </>
+  );
 };
 
 export default Page;
