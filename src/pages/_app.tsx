@@ -1,13 +1,10 @@
-import { ChakraProvider } from "@chakra-ui/react";
-import { theme } from "~styles/theme";
+import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
-  return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
-  );
+import "antd/dist/reset.css";
+
+const App: NextPage<AppProps> = ({ Component, pageProps }) => {
+  return <Component {...pageProps} />;
 };
 
-export default MyApp;
+export default App;

@@ -1,69 +1,25 @@
 {
   "name": "ranking-pbr",
+  "description": "A system for scoring games or pranks with friends",
+  "version": "0.1.0",
   "private": false,
-  "version": "0.0.2",
-  "main": "index.js",
-  "repository": "https://github.com/EddyPBR/ranking-pbr.git",
-  "author": "EddyPBR <edvaldojunior1310@gmail.com>",
-  "license": "MIT",
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
-    }
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gen:theme-type": "chakra-cli tokens ./src/styles/theme.ts",
-    "commit": "cz",
-    "postinstall": "husky install",
-    "prepack": "pinst --disable",
-    "postpack": "pinst --enable"
+    "turbo": "next dev --turbo"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.2.1",
-    "@emotion/react": "^11",
-    "@emotion/styled": "^11",
-    "firebase": "^9.8.4",
-    "framer-motion": "^6",
-    "next": "12.2.0",
-    "next-compose-plugins": "^2.2.1",
-    "next-pwa": "^5.5.4",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-icons": "^4.4.0"
-  },
-  "devDependencies": {
-    "@chakra-ui/cli": "^2.1.0",
-    "@commitlint/cli": "^17.0.3",
-    "@commitlint/config-conventional": "^17.0.3",
-    "@types/node": "18.0.0",
-    "@types/react": "18.0.14",
-    "@typescript-eslint/eslint-plugin": "^5.10.0",
-    "@typescript-eslint/parser": "^5.10.0",
-    "commitizen": "^4.2.5",
-    "cz-conventional-changelog": "3.3.0",
-    "eslint": "^8.7.0",
-    "eslint-config-next": "^12.2.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-import-helpers": "^1.2.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
-    "husky": "^8.0.1",
-    "pinst": "^3.0.0",
-    "prettier": "^2.5.1",
-    "typescript": "4.7.4"
-  },
-  "resolutions": {
-    "got": "^11.8.5"
+    "@types/node": "18.11.9",
+    "@types/react": "18.0.25",
+    "@types/react-dom": "18.0.9",
+    "antd": "^5.0.0",
+    "eslint": "8.28.0",
+    "eslint-config-next": "^13.0.4",
+    "next": "^13.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "4.9.3"
   }
 }
