@@ -1,0 +1,7 @@
+.google-button {
+  background-color: #FF3E30;
+}
+
+.google-button:hover {
+  background-color: #DB4437 !important;
+}
