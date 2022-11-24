@@ -12,8 +12,10 @@ import {
   Input,
   Button,
   message,
+  Divider,
 } from "antd";
 import { useState } from "react";
+import { ButtonLoginGoogle } from "~components/ButtonLoginGoogle";
 
 type FormType = {
   room_code: string;
@@ -79,6 +81,12 @@ const Page: NextPage = () => {
                   Entrar na sala
                 </Button>
               </Form>
+
+              <Divider>
+                <Typography.Text>OU</Typography.Text>
+              </Divider>
+
+              <ButtonLoginGoogle />
             </Card>
           </Col>
         </Row>
